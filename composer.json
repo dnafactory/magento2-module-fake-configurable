@@ -1,11 +1,13 @@
 {
   "name": "dnafactory/module-fake-configurable",
   "type": "magento2-module",
-  "description": "N/A",
+  "description": "Fake Configurable",
   "license": [
+      "OSL-3.0"
   ],
   "require": {
-    "php": "^7.1|^7.2|^7.3"
+    "php": "^7.1|^7.2|^7.3|^7.4",
+    "dnafactory/core": "^1"
   },
   "authors": [
     {

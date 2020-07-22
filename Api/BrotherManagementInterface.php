@@ -1,12 +1,3 @@
-#Fake Configurable
-
-`composer require dnafactory/fake-configurable`
-
-## Facade & Usage
-
-All associated product are called "brother"
-
-```php
 <?php
 
 namespace DNAFactory\FakeConfigurable\Api;
@@ -22,7 +13,3 @@ interface BrotherManagementInterface
     public function getBrotherProductCollection(ProductInterface $product): ProductCollection;
     public function getBrotherLinkCollection(ProductInterface $product): LinkCollection;
 }
-```
-
-
-
