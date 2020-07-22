@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.main">
+            <block class="DNAFactory\FakeConfigurable\Block\Catalog\Product\Brother" before="product.info" name="product.info.brothers" template="DNAFactory_FakeConfigurable::catalog/product/brothers.phtml">
+                <arguments>
+                    <argument name="current_product" xsi:type="object">DNAFactory\Core\ViewModel\CurrentProductViewModel</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

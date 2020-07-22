@@ -83,7 +83,11 @@ class Brother extends DataObject
      */
     public function getBrotherProductCollection(ProductInterface $currentProduct)
     {
-        $collection = $this->getLinkInstance()->useBrotherLinks()->getProductCollection()->setIsStrongMode();
+        $collection = $this->getLinkInstance()
+                            ->useBrotherLinks()
+                            ->getProductCollection()
+                            ->addAttributeToSelect('*')
+                            ->setIsStrongMode();
         $collection->setProduct($currentProduct);
         return $collection;
     }
