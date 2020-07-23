@@ -1,8 +1,24 @@
 <?php /** @var \DNAFactory\FakeConfigurable\Block\Catalog\Product\Brother $block */ ?>
 <?php $product = $block->getProduct(); ?>
 
-TODO: DA FARE IN AJAX
-<?php foreach ($block->getBrothers() as $brother): ?>
-    <?php var_dump($brother->debug()); ?><br />
-<?php endforeach; ?>
-ENDTODO
+<div id="fake-configurable" data-bind="scope: 'fakeConfigurable'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+
+    <script type="text/x-magento-init">
+       {
+           "#fake-configurable": {
+               "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+           }
+       }
+    </script>
+
+    <script>
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function(url, blockLoader) {
+            blockLoader("<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>");
+            return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
+        })
+    </script>
+</div>

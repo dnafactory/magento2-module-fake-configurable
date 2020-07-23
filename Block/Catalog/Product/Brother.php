@@ -9,6 +9,10 @@ use Magento\Framework\View\Element\Template;
 class Brother extends \Magento\Framework\View\Element\Template
 {
     /**
+     * @var array|\Magento\Checkout\Block\Checkout\LayoutProcessorInterface[]
+     */
+    protected $layoutProcessors;
+    /**
      * @var ProductInterface
      */
     private $product = null;
@@ -20,10 +24,13 @@ class Brother extends \Magento\Framework\View\Element\Template
     public function __construct(
         Template\Context $context,
         BrotherManagementInterface $brotherManagement,
+        array $layoutProcessors = [],
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->brotherManagement = $brotherManagement;
+        $this->jsLayout = isset($data['jsLayout']) && is_array($data['jsLayout']) ? $data['jsLayout'] : [];
+        $this->layoutProcessors = $layoutProcessors;
     }
 
     /**
@@ -41,5 +48,19 @@ class Brother extends \Magento\Framework\View\Element\Template
     {
         $product = $this->getProduct();
         return $this->brotherManagement->getBrotherProducts($product);
+    }
+
+    public function getAjaxUrl()
+    {
+        return $this->_urlBuilder->getUrl('fakeconfigurable/product/getBrothers');
+    }
+
+    public function getJsLayout()
+    {
+        foreach ($this->layoutProcessors as $processor) {
+            $this->jsLayout = $processor->process($this->jsLayout);
+        }
+        $this->jsLayout['components']['fakeConfigurable']['productId'] = $this->getProduct()->getId();
+        return \Zend_Json::encode($this->jsLayout);
     }
 }

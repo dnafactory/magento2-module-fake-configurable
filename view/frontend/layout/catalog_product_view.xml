@@ -5,6 +5,14 @@
             <block class="DNAFactory\FakeConfigurable\Block\Catalog\Product\Brother" before="product.info" name="product.info.brothers" template="DNAFactory_FakeConfigurable::catalog/product/brothers.phtml">
                 <arguments>
                     <argument name="current_product" xsi:type="object">DNAFactory\Core\ViewModel\CurrentProductViewModel</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="fakeConfigurable" xsi:type="array">
+                                <item name="component" xsi:type="string">DNAFactory_FakeConfigurable/js/fake-configurable</item>
+                                <item name="template" xsi:type="string">DNAFactory_FakeConfigurable/fakeconfigurable</item>
+                            </item>
+                        </item>
+                    </argument>
                 </arguments>
             </block>
         </referenceContainer>
