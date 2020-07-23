@@ -18,7 +18,6 @@ define([
         initialize: function (config) {
             this._super();
             this.productId = config.productId;
-            console.log(this.productId);
             this.getFakeConfigurable();
         },
 
