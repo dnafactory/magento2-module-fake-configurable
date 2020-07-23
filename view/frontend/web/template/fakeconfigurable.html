@@ -1,5 +1,4 @@
-<div>TODO</div>
-<div data-bind="foreach: products">
-    <div data-bind="value: name"></div>
+<div data-bind="text: brotherLabel"></div>
+<div data-bind="foreach: { data: products, as: 'product' }">
+    <div data-bind="text: product.name"></div>
 </div>
-<div>TODO</div>

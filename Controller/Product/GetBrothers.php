@@ -39,14 +39,12 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
         $result = $this->jsonResultFactory->create();
         try {
             $productId = $this->getRequest()->getParam('productId');
-
             if (!$productId) {
                 $result->setData($this->makeData(-1, __("ProductID are emptpy")));
                 return $result;
             }
 
             $product = $this->productRepository->getById($productId);
-
             if (!$product) {
                 $result->setData($this->makeData(-1, __("Product not found")));
                 return $result;

@@ -11,6 +11,7 @@ define([
             template: 'DNAFactory_FakeConfigurable/fakeconfigurable',
         },
 
+        brotherLabel: 'Color',
         productId: null,
         products: ko.observableArray([]),
 
@@ -30,11 +31,9 @@ define([
                 ''
             ).done(
                 function (response) {
-                    console.log(response);
                     if (response.status >= 0) {
                         for (var i = 0; i < response.data.length; i++) {
                             that.products.push(response.data[i]);
-                            console.log(response.data[i]);
                         }
                     }
                 }
