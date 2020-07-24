@@ -11,13 +11,15 @@ define([
             template: 'DNAFactory_FakeConfigurable/fakeconfigurable',
         },
 
-        brotherLabel: 'Color',
+        brotherLabel: "",
         productId: null,
         products: ko.observableArray([]),
+        shouldShowBrothers: ko.observable(false),
 
         initialize: function (config) {
             this._super();
             this.productId = config.productId;
+            this.brotherLabel = config.brotherLabel;
             this.getFakeConfigurable();
         },
 
@@ -31,6 +33,7 @@ define([
             ).done(
                 function (response) {
                     if (response.status >= 0) {
+                        that.shouldShowBrothers(true);
                         for (var i = 0; i < response.data.length; i++) {
                             that.products.push(response.data[i]);
                         }

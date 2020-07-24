@@ -1,3 +1,22 @@
 & when (@media-common = true) {
+    #fake-configurable-items-wrapper {
+        .items-wrapper {
+            margin-top: 10px;
 
+            .items {
+                display: flex;
+            }
+
+            .item {
+                width: 64px;
+                margin: 5px;
+                flex-direction: row;
+                border: 1px solid transparent;
+
+                &:hover {
+                    border: 1px solid #1979C3;
+                }
+            }
+        }
+    }
 }

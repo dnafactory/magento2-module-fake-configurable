@@ -3,6 +3,7 @@
 namespace DNAFactory\FakeConfigurable\Block\Catalog\Product;
 
 use DNAFactory\FakeConfigurable\Api\BrotherManagementInterface;
+use DNAFactory\FakeConfigurable\Api\FakeConfigurableConfigurationInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\View\Element\Template;
 
@@ -20,10 +21,15 @@ class Brother extends \Magento\Framework\View\Element\Template
      * @var BrotherManagementInterface
      */
     private $brotherManagement;
+    /**
+     * @var FakeConfigurableConfigurationInterface
+     */
+    private $fakeConfigurableConfiguration;
 
     public function __construct(
         Template\Context $context,
         BrotherManagementInterface $brotherManagement,
+        FakeConfigurableConfigurationInterface $fakeConfigurableConfiguration,
         array $layoutProcessors = [],
         array $data = []
     ) {
@@ -31,6 +37,7 @@ class Brother extends \Magento\Framework\View\Element\Template
         $this->brotherManagement = $brotherManagement;
         $this->jsLayout = isset($data['jsLayout']) && is_array($data['jsLayout']) ? $data['jsLayout'] : [];
         $this->layoutProcessors = $layoutProcessors;
+        $this->fakeConfigurableConfiguration = $fakeConfigurableConfiguration;
     }
 
     /**
@@ -61,6 +68,7 @@ class Brother extends \Magento\Framework\View\Element\Template
             $this->jsLayout = $processor->process($this->jsLayout);
         }
         $this->jsLayout['components']['fakeConfigurable']['productId'] = $this->getProduct()->getId();
+        $this->jsLayout['components']['fakeConfigurable']['brotherLabel'] = $this->fakeConfigurableConfiguration->getBrotherLabel();
         return \Zend_Json::encode($this->jsLayout);
     }
 }

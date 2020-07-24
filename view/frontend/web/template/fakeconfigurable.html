@@ -1,4 +1,12 @@
-<div data-bind="text: brotherLabel"></div>
-<div data-bind="foreach: { data: products, as: 'product' }">
-    <div data-bind="text: product.name"></div>
+<div id="fake-configurable-items-wrapper" data-bind="if: shouldShowBrothers">
+    <div class="label" data-bind="text: brotherLabel"></div>
+    <div class="items-wrapper">
+        <ul class="items" data-bind="foreach: { data: products, as: 'product' }">
+            <li class="item">
+                <a class="brother-url" data-bind="attr:{href: product.product_url, alt: product.name}">
+                    <img class="brother-image" data-bind="attr:{src: product.image_url}" />
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

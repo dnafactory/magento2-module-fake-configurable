@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="dnafactory" translate="label">
+            <label>DNAFactory</label>
+        </tab>
+        <section id="fakeconfigurable" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Fake Configurable</label>
+            <tab>dnafactory</tab>
+            <resource>DNAFactory_FakeConfigurable::fakeconfigurable</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <resource>DNAFactory_FakeConfigurable::fakeconfigurable_general</resource>
+                <field id="brother_label" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Brother Label</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

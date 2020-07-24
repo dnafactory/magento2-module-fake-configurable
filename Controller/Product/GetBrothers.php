@@ -21,17 +21,23 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
      * @var BrotherManagementInterface
      */
     protected $brotherManagement;
+    /**
+     * @var \Magento\Catalog\Helper\Image
+     */
+    protected $imageHelper;
 
     public function __construct(
         JsonFactory $jsonResultFactory,
         ProductRepositoryInterface $productRepository,
         BrotherManagementInterface $brotherManagement,
+        \Magento\Catalog\Helper\Image $imageHelper,
         Context $context
     ) {
         parent::__construct($context);
         $this->jsonResultFactory = $jsonResultFactory;
         $this->productRepository = $productRepository;
         $this->brotherManagement = $brotherManagement;
+        $this->imageHelper = $imageHelper;
     }
 
     public function execute()
@@ -64,7 +70,14 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
     {
         $tmp = [];
         foreach ($brothers as $brother) {
-            $tmp[] = $brother->toArray();
+            $brotherAsArray = $brother->toArray();
+
+            $brotherAsArray['product_url'] = $brother->getProductUrl();
+
+            $this->imageHelper->init($brother, 'product_base_image');
+            $brotherAsArray['image_url'] = $this->imageHelper->getUrl();
+
+            $tmp[] = $brotherAsArray;
         }
 
         return $tmp;

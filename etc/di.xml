@@ -26,4 +26,5 @@
     </type>
 
     <preference for="DNAFactory\FakeConfigurable\Api\BrotherManagementInterface" type="DNAFactory\FakeConfigurable\Management\BrotherManagement"/>
+    <preference for="DNAFactory\FakeConfigurable\Api\FakeConfigurableConfigurationInterface" type="DNAFactory\FakeConfigurable\Helper\Config\FakeConfigurableConfiguration" />
 </config>

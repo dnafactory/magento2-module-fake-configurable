@@ -10,6 +10,10 @@
                         </resource>
                     </resource>
                 </resource>
+
+                <resource id="DNAFactory_FakeConfigurable::fakeconfigurable" title="Fake Configurable" sortOrder="10">
+                    <resource id="DNAFactory_FakeConfigurable::fakeconfigurable_general" title="General" sortOrder="10"/>
+                </resource>
             </resource>
         </resources>
     </acl>
