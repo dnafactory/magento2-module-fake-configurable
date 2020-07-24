@@ -10,7 +10,7 @@
             <resource>DNAFactory_FakeConfigurable::fakeconfigurable</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
-                <field id="brother_label" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="brother_label" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Brother Label</label>
                 </field>
             </group>
