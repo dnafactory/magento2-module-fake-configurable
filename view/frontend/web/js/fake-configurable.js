@@ -33,8 +33,13 @@ define([
             ).done(
                 function (response) {
                     if (response.status >= 0) {
-                        that.shouldShowBrothers(true);
-                        for (var i = 0; i < response.data.length; i++) {
+                        var numProducts = response.data.length;
+
+                        if (numProducts > 0) {
+                            that.shouldShowBrothers(true);
+                        }
+
+                        for (var i = 0; i < numProducts; i++) {
                             that.products.push(response.data[i]);
                         }
                     }
