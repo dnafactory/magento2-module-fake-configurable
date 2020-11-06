@@ -2,6 +2,9 @@
 
 `composer require dnafactory/fake-configurable`
 
+Questo modulo crea finti configurabili (associabili a qualsiasi tipologia di prodotti). 
+In questo modo è possibile creare url differenti per prodotti e beneficiare visivamente delle configurazioni.
+
 ## Facade & Usage
 
 All associated product are called "brother"
