@@ -1,7 +1,8 @@
 {
   "name": "dnafactory/module-fake-configurable",
   "type": "magento2-module",
-  "description": "Fake Configurable",
+  "description": "Questo modulo crea finti configurabili (associabili a qualsiasi tipologia di prodotti). In questo modo è possibile creare url differenti per prodotti e beneficiare visivamente delle configurazioni.",
+  "keywords": ["Magento2"],
   "license": [
       "OSL-3.0"
   ],
