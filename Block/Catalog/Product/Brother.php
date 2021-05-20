@@ -71,4 +71,9 @@ class Brother extends \Magento\Framework\View\Element\Template
         $this->jsLayout['components']['fakeConfigurable']['brotherLabel'] = $this->fakeConfigurableConfiguration->getBrotherLabel();
         return \Zend_Json::encode($this->jsLayout);
     }
+
+    public function includeCurrentProduct()
+    {
+        return $this->fakeConfigurableConfiguration->includeCurrentProduct();
+    }
 }

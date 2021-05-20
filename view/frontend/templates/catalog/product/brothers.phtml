@@ -1,8 +1,27 @@
-<?php /** @var \DNAFactory\FakeConfigurable\Block\Catalog\Product\Brother $block */ ?>
-<?php $product = $block->getProduct(); ?>
+<?php /** @var \DNAFactory\FakeConfigurable\Block\Catalog\Product\Brother $block */
+$brothers = $block->getBrothers();
+?>
+
 
 <div id="fake-configurable" data-bind="scope: 'fakeConfigurable'">
     <!-- ko template: getTemplate() --><!-- /ko -->
+
+    <div id="fake-configurable-items-wrapper" data-bind="css: { 'd-none': shouldShowBrothers }">
+        <span class="label skeleton"></span>
+        <div class="items-wrapper">
+            <ul class="items d-flex">
+                <?php foreach ($brothers as $brother):?>
+                    <li class="item skeleton">
+                    </li>
+                <?php endforeach;?>
+
+                <?php if ($block->includeCurrentProduct()):?>
+                    <li class="item skeleton">
+                    </li>
+                <?php endif;?>
+            </ul>
+        </div>
+    </div>
 
     <script type="text/x-magento-init">
        {
@@ -10,15 +29,5 @@
                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
            }
        }
-    </script>
-
-    <script>
-        require([
-            'mage/url',
-            'Magento_Ui/js/block-loader'
-        ], function(url, blockLoader) {
-            blockLoader("<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>");
-            return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
-        })
     </script>
 </div>

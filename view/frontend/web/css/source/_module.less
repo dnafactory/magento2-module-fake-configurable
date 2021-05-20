@@ -1,5 +1,45 @@
-& when (@media-common = true) {
+//
+//  Variables
+//  _____________________________________________
+@fake-configurable-item-width: 64px;
+@fake-configurable-item-height: 104px;
+
+@fake-configurable-item-border: 1px solid transparent;
+@fake-configurable-item-border-hover: 1px solid #1979C3;
+@fake-configurable-item-border-active: 1px solid #1979C3;
+
+@fake-configurable-item-margin: 5px;
+
+@fake-configurable-skeleton-first-color: #f2f2f2;
+@fake-configurable-skeleton-second-color: #fff;
+
+& when(@media-target = 'critical'){
+    @keyframes shine-lines {
+        0% {
+            background-position: -100px;
+        }
+        40% {
+            background-position: 140px;
+        }
+        100% {
+            background-position: 140px;
+        }
+    }
+
     #fake-configurable-items-wrapper {
+        .skeleton {
+            background-image: linear-gradient(90deg, @fake-configurable-skeleton-first-color 0px, @fake-configurable-skeleton-second-color 40px, @fake-configurable-skeleton-first-color 80px) !important;
+            background-size: 600px!important;
+            border: unset!important;
+            animation: shine-lines 1.6s infinite linear;
+
+            &.label {
+                height: 17px;
+                width: 150px;
+                display: block;
+            }
+        }
+
         .items-wrapper {
             margin-top: 10px;
 
@@ -8,13 +48,30 @@
             }
 
             .item {
-                width: 64px;
-                margin: 5px;
+                .lib-css(width, @fake-configurable-item-width);
+                .lib-css(height, @fake-configurable-item-height);
+                .lib-css(margin, @fake-configurable-item-margin);
+                .lib-css(border, @fake-configurable-item-border);
                 flex-direction: row;
-                border: 1px solid transparent;
+            }
+        }
+    }
+}
 
+& when (@media-common = true) {
+    #fake-configurable-items-wrapper {
+        .items-wrapper {
+            .item {
                 &:hover {
-                    border: 1px solid #1979C3;
+                    .lib-css(border, @fake-configurable-item-border-hover);
+                }
+
+                &.active {
+                    .lib-css(border, @fake-configurable-item-border-active);
+                    cursor: pointer;
+                    > a {
+                        pointer-events: none;
+                    }
                 }
             }
         }
