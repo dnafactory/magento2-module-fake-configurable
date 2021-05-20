@@ -70,7 +70,8 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
     {
         $tmp = [];
         foreach ($brothers as $brother) {
-            $brotherAsArray = $brother->toArray();
+            //$brotherAsArray = $brother->toArray();
+            $brotherAsArray = [];
 
             $brotherAsArray['product_url'] = $brother->getProductUrl();
 
