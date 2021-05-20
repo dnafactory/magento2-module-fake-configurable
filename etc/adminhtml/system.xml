@@ -13,6 +13,14 @@
                 <field id="brother_label" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Brother Label</label>
                 </field>
+                <field id="brother_attribute" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Brother attribute</label>
+                    <source_model>DNAFactory\FakeConfigurable\Model\Config\Source\ProductAttributes</source_model>
+                </field>
+                <field id="include_current_product" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Include current product</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
         </section>
     </system>

@@ -15,12 +15,37 @@ define([
         productId: null,
         products: ko.observableArray([]),
         shouldShowBrothers: ko.observable(false),
+        defaultBrotherValue: ko.observable(""),
+        brotherValue: ko.observable(false),
 
         initialize: function (config) {
             this._super();
             this.productId = config.productId;
             this.brotherLabel = config.brotherLabel;
             this.getFakeConfigurable();
+
+            this.defaultBrotherValue = ko.computed(function (){
+                if (!this.products().length) {
+                    return "";
+                }
+                return this.products()[0]["attribute"];
+            }, this);
+            this.restoreDefaultAttributeValue();
+        },
+
+        setAttributeValue: function (product, event, context) {
+            var value = product["attribute"];
+            if (!context) {
+                context = this;
+            }
+            context.brotherValue(value);
+        },
+
+        restoreDefaultAttributeValue: function (product, event, context) {
+            if (!context) {
+                context = this;
+            }
+            context.brotherValue(context.defaultBrotherValue());
         },
 
         getFakeConfigurable: function () {

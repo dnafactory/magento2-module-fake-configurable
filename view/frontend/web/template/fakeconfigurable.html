@@ -1,8 +1,9 @@
 <div id="fake-configurable-items-wrapper" data-bind="if: shouldShowBrothers">
-    <div class="label" data-bind="text: brotherLabel"></div>
+    <span class="label" data-bind="text: brotherLabel"></span>
+    <span class="value" data-bind="text: brotherValue"></span>
     <div class="items-wrapper">
         <ul class="items" data-bind="foreach: { data: products, as: 'product' }">
-            <li class="item">
+            <li afterRender="(data, event)=> $parent.restoreDefaultAttributeValue(data, event, $parent)" data-bind="attr: {class: product.class + ' item', attribute_value: product.attribute}, event: { mouseover: (data, event)=> $parent.setAttributeValue(data, event, $parent), mouseout: (data, event)=> $parent.restoreDefaultAttributeValue(data, event, $parent) }">
                 <a class="brother-url" data-bind="attr:{href: product.product_url, alt: product.name}">
                     <img class="brother-image" data-bind="attr:{src: product.image_url}" />
                 </a>

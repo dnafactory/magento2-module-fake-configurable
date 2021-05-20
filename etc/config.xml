@@ -5,6 +5,8 @@
         <fakeconfigurable>
             <general>
                 <brother_label>Color</brother_label>
+                <brother_attribute>0</brother_attribute>
+                <include_current_product>0</include_current_product>
             </general>
         </fakeconfigurable>
     </default>

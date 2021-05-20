@@ -3,9 +3,11 @@
 namespace DNAFactory\FakeConfigurable\Controller\Product;
 
 use DNAFactory\FakeConfigurable\Api\BrotherManagementInterface;
+use DNAFactory\FakeConfigurable\Api\FakeConfigurableConfigurationInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Psr\Log\LoggerInterface;
 
 class GetBrothers extends \Magento\Framework\App\Action\Action
 {
@@ -25,12 +27,22 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
      * @var \Magento\Catalog\Helper\Image
      */
     protected $imageHelper;
+    /**
+     * @var FakeConfigurableConfigurationInterface
+     */
+    protected $fakeConfigurableConfiguration;
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     public function __construct(
         JsonFactory $jsonResultFactory,
         ProductRepositoryInterface $productRepository,
         BrotherManagementInterface $brotherManagement,
         \Magento\Catalog\Helper\Image $imageHelper,
+        FakeConfigurableConfigurationInterface $fakeConfigurableConfiguration,
+        LoggerInterface $logger,
         Context $context
     ) {
         parent::__construct($context);
@@ -38,6 +50,8 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
         $this->productRepository = $productRepository;
         $this->brotherManagement = $brotherManagement;
         $this->imageHelper = $imageHelper;
+        $this->fakeConfigurableConfiguration = $fakeConfigurableConfiguration;
+        $this->logger = $logger;
     }
 
     public function execute()
@@ -57,6 +71,11 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
             }
 
             $brothers = $this->brotherManagement->getBrotherProducts($product);
+            if ($this->fakeConfigurableConfiguration->includeCurrentProduct()) {
+                $product->setData("class", "active");
+                array_unshift($brothers , $product);
+            }
+
             $result->setData($this->makeData(0, "", $this->convertToArray($brothers)));
         } catch (\Exception $e) {
             $result->setData($this->makeData(-1, $e->getMessage()));
@@ -70,8 +89,18 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
     {
         $tmp = [];
         foreach ($brothers as $brother) {
+            //Better performance
             //$brotherAsArray = $brother->toArray();
             $brotherAsArray = [];
+
+            if ($brother->hasClass()) {
+                $brotherAsArray['class'] = $brother->getClass();
+            }
+
+            $brotherAttribute = $this->fakeConfigurableConfiguration->getBrotherAttribute();
+            if ($brotherAttribute) {
+                $brotherAsArray["attribute"] = $this->getAttributeValue($brother, $brotherAttribute);
+            }
 
             $brotherAsArray['product_url'] = $brother->getProductUrl();
 
@@ -91,5 +120,20 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
             'error' => $error,
             'data' => $data
         ];
+    }
+
+    protected function getAttributeValue($resourceItem, $field)
+    {
+        try {
+            $attribute = $resourceItem->getResource()->getAttribute($field);
+            if ($attribute->usesSource()) {
+                return $attribute->getSource()->getOptionText($resourceItem[$field]);
+            }
+
+            return $resourceItem[$field];
+        } catch (\Exception $e) {
+            $this->logger->error('Getting Attribute Value Error', ['error' => $e->getMessage()]);
+            return "";
+        }
     }
 }
