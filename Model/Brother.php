@@ -7,6 +7,7 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Link\Collection;
 use Magento\Framework\DataObject;
 use DNAFactory\FakeConfigurable\Model\Product\Brother\Link;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Brother extends DataObject
 {
@@ -31,16 +32,25 @@ class Brother extends DataObject
      * @var Link
      */
     protected $linkInstance;
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
 
     /**
      * Brother constructor.
+     * @param StoreManagerInterface $storeManager
      * @param Link $productLink
      * @param array $data
      */
-    public function __construct(Link $productLink, array $data = [])
-    {
+    public function __construct(
+        StoreManagerInterface $storeManager,
+        Link $productLink,
+        array $data = []
+    ) {
         parent::__construct($data);
         $this->linkInstance = $productLink;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -103,6 +113,7 @@ class Brother extends DataObject
         $collection = $this->getLinkInstance()
             ->useBrotherLinks()
             ->getProductCollection()
+            ->addStoreFilter($this->storeManager->getStore())
             ->addAttributeToSelect('*')
             ->setIsStrongMode();
         $collection->setProduct($currentProduct);
