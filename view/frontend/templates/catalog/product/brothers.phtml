@@ -2,7 +2,7 @@
 $brothers = $block->getBrothers();
 ?>
 
-
+<?php if (!empty($brothers) || $block->includeCurrentProduct()):?>
 <div id="fake-configurable" data-bind="scope: 'fakeConfigurable'">
     <!-- ko template: getTemplate() --><!-- /ko -->
 
@@ -31,3 +31,4 @@ $brothers = $block->getBrothers();
        }
     </script>
 </div>
+<?php endif;?>

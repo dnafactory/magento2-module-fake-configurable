@@ -17,6 +17,10 @@
                     <label>Brother attribute</label>
                     <source_model>DNAFactory\FakeConfigurable\Model\Config\Source\ProductAttributes</source_model>
                 </field>
+                <field id="use_brother_attribute_image" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Use Brother attribute image</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="include_current_product" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Include current product</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
