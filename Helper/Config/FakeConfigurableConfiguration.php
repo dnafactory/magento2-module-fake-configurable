@@ -13,6 +13,7 @@ class FakeConfigurableConfiguration extends AbstractHelper implements FakeConfig
     const XML_FAKECONFIGURABLE_GENERAL_BROTHERLABEL = 'fakeconfigurable/general/brother_label';
     const XML_FAKECONFIGURABLE_GENERAL_BROTHERATTRIBUTE = 'fakeconfigurable/general/brother_attribute';
     const XML_FAKECONFIGURABLE_GENERAL_BROTHER_INCLUDECURRENTPRODUCT = 'fakeconfigurable/general/include_current_product';
+    const XML_FAKECONFIGURABLE_GENERAL_USE_BROTHER_ATTRIBUTE_IMAGE = 'fakeconfigurable/general/use_brother_attribute_image';
 
     public function getBrotherLabel($scopeConfig = \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $scopeCode = null)
     {
@@ -27,6 +28,11 @@ class FakeConfigurableConfiguration extends AbstractHelper implements FakeConfig
     public function includeCurrentProduct($scopeConfig = \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $scopeCode = null)
     {
         return (bool)$this->getConfig(self::XML_FAKECONFIGURABLE_GENERAL_BROTHER_INCLUDECURRENTPRODUCT, $scopeConfig, $scopeCode);
+    }
+
+    public function useBrotherAttributeImage($scopeConfig = \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $scopeCode = null)
+    {
+        return (bool)$this->getConfig(self::XML_FAKECONFIGURABLE_GENERAL_USE_BROTHER_ATTRIBUTE_IMAGE, $scopeConfig, $scopeCode);
     }
 
     protected function getConfig($config, $scopeConfig = \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $scopeCode = null)

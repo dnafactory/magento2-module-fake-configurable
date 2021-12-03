@@ -3,17 +3,17 @@ namespace DNAFactory\FakeConfigurable\Model\Config\Source;
 
 class ProductAttributes implements \Magento\Framework\Option\ArrayInterface
 {
-    protected $attributeFactory;
+    protected \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory $attributeCollectionFactory;
 
     public function __construct (
-        \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attributeFactory
+        \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory $attributeCollectionFactory
     ) {
-        $this->attributeFactory = $attributeFactory;
+        $this->attributeCollectionFactory = $attributeCollectionFactory;
     }
 
     public function toOptionArray()
     {
-        $attributes = $this->attributeFactory->getCollection();
+        $attributes = $this->attributeCollectionFactory->create();
         $options = [
             [
                 'value' => 0,

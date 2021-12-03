@@ -7,6 +7,7 @@
                 <brother_label>Color</brother_label>
                 <brother_attribute>0</brother_attribute>
                 <include_current_product>0</include_current_product>
+                <use_brother_attribute_image>0</use_brother_attribute_image>
             </general>
         </fakeconfigurable>
     </default>
