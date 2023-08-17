@@ -6,9 +6,11 @@ use DNAFactory\FakeConfigurable\Api\BrotherManagementInterface;
 use DNAFactory\FakeConfigurable\Api\FakeConfigurableConfigurationInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\Serialize\Serializer\Json;
 
 class Brother extends \Magento\Framework\View\Element\Template
 {
+    public const AJAX_URL = 'fakeconfigurable/product/getBrothers';
     /**
      * @var array|\Magento\Checkout\Block\Checkout\LayoutProcessorInterface[]
      */
@@ -25,11 +27,16 @@ class Brother extends \Magento\Framework\View\Element\Template
      * @var FakeConfigurableConfigurationInterface
      */
     private $fakeConfigurableConfiguration;
+    /**
+     * @var Json
+     */
+    private $jsonSerializer;
 
     public function __construct(
         Template\Context $context,
         BrotherManagementInterface $brotherManagement,
         FakeConfigurableConfigurationInterface $fakeConfigurableConfiguration,
+        Json $jsonSerializer,
         array $layoutProcessors = [],
         array $data = []
     ) {
@@ -38,6 +45,7 @@ class Brother extends \Magento\Framework\View\Element\Template
         $this->jsLayout = isset($data['jsLayout']) && is_array($data['jsLayout']) ? $data['jsLayout'] : [];
         $this->layoutProcessors = $layoutProcessors;
         $this->fakeConfigurableConfiguration = $fakeConfigurableConfiguration;
+        $this->jsonSerializer = $jsonSerializer;
     }
 
     /**
@@ -59,7 +67,7 @@ class Brother extends \Magento\Framework\View\Element\Template
 
     public function getAjaxUrl()
     {
-        return $this->_urlBuilder->getUrl('fakeconfigurable/product/getBrothers');
+        return $this->_urlBuilder->getUrl(self::AJAX_URL);
     }
 
     public function getJsLayout()
@@ -69,7 +77,7 @@ class Brother extends \Magento\Framework\View\Element\Template
         }
         $this->jsLayout['components']['fakeConfigurable']['productId'] = $this->getProduct()->getId();
         $this->jsLayout['components']['fakeConfigurable']['brotherLabel'] = $this->fakeConfigurableConfiguration->getBrotherLabel();
-        return \Zend_Json::encode($this->jsLayout);
+        return $this->jsonSerializer->serialize($this->jsLayout);
     }
 
     public function includeCurrentProduct()
