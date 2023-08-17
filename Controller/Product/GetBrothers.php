@@ -177,6 +177,7 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
 
     protected function getImageByBrother($brother)
     {
+        // PR di prova
         $this->imageHelper->init($brother, 'product_base_image');
         return $this->imageHelper->getUrl();
     }
