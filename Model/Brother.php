@@ -77,7 +77,7 @@ class Brother extends DataObject
         $productId = $currentProduct->getId();
         if (!$this->hasBrotherProducts($productId)) {
             $products = [];
-            $collection = $this->getBrotherProductCollection($currentProduct);
+            $collection = $this->getGeneralBrotherProductCollection($currentProduct);
             foreach ($collection as $product) {
                 $products[] = $product;
             }
@@ -105,6 +105,18 @@ class Brother extends DataObject
         return $this->botherProductIds[$productId];
     }
 
+    protected function getGeneralBrotherProductCollection(ProductInterface $currentProduct)
+    {
+        $collection = $this->getLinkInstance()
+            ->useBrotherLinks()
+            ->getProductCollection()
+            ->addStoreFilter($this->storeManager->getStore())
+            ->addAttributeToSelect('*')
+            ->setIsStrongMode();
+        $collection->setProduct($currentProduct);
+        return $collection;
+    }
+
     /**
      * Retrieve collection Brother product
      *
@@ -113,14 +125,8 @@ class Brother extends DataObject
      */
     public function getBrotherProductCollection(ProductInterface $currentProduct)
     {
-        $collection = $this->getLinkInstance()
-            ->useBrotherLinks()
-            ->getProductCollection()
-            ->addStoreFilter($this->storeManager->getStore())
-            ->addAttributeToSelect('*')
-            ->setIsStrongMode()
+        $collection = $this->getGeneralBrotherProductCollection($currentProduct)
             ->setVisibility($this->catalogProductVisibility->getVisibleInCatalogIds());
-        $collection->setProduct($currentProduct);
         return $collection;
     }
 
