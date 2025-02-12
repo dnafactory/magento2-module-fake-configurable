@@ -36,6 +36,7 @@ class Brother extends DataObject
      * @var StoreManagerInterface
      */
     protected $storeManager;
+    protected Product\Visibility $catalogProductVisibility;
 
     /**
      * Brother constructor.
@@ -46,11 +47,13 @@ class Brother extends DataObject
     public function __construct(
         StoreManagerInterface $storeManager,
         Link $productLink,
+        \Magento\Catalog\Model\Product\Visibility $catalogProductVisibility,
         array $data = []
     ) {
         parent::__construct($data);
         $this->linkInstance = $productLink;
         $this->storeManager = $storeManager;
+        $this->catalogProductVisibility = $catalogProductVisibility;
     }
 
     /**
@@ -115,7 +118,8 @@ class Brother extends DataObject
             ->getProductCollection()
             ->addStoreFilter($this->storeManager->getStore())
             ->addAttributeToSelect('*')
-            ->setIsStrongMode();
+            ->setIsStrongMode()
+            ->setVisibility($this->catalogProductVisibility->getVisibleInCatalogIds());
         $collection->setProduct($currentProduct);
         return $collection;
     }
