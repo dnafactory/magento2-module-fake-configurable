@@ -6,6 +6,7 @@ use DNAFactory\FakeConfigurable\Api\BrotherManagementInterface;
 use DNAFactory\FakeConfigurable\Api\FakeConfigurableConfigurationInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Psr\Log\LoggerInterface;
 use Magento\Swatches\Helper\Data as SwatchData;
@@ -39,8 +40,18 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
     protected $logger;
     protected SwatchData $swatchesData;
     protected SwatchMedia $swatchesMedia;
+    /**
+     * @var ProductMetadataInterface
+     */
+    protected $productMetadata;
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
 
     public function __construct(
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
+        ProductMetadataInterface $productMetadata,
         SwatchMedia $swatchesMedia,
         SwatchData $swatchesData,
         JsonFactory $jsonResultFactory,
@@ -60,19 +71,31 @@ class GetBrothers extends \Magento\Framework\App\Action\Action
         $this->logger = $logger;
         $this->swatchesData = $swatchesData;
         $this->swatchesMedia = $swatchesMedia;
+        $this->productMetadata = $productMetadata;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     public function execute()
     {
         $result = $this->jsonResultFactory->create();
         try {
+            $isEnterprise = $this->productMetadata->getEdition() == 'Enterprise';
             $productId = $this->getRequest()->getParam('productId');
             if (!$productId) {
                 $result->setData($this->makeData(-1, __("ProductID are emptpy")));
                 return $result;
             }
 
-            $product = $this->productRepository->getById($productId);
+            if (!$isEnterprise) {
+                $product = $this->productRepository->getById($productId);
+            } else {
+                $searchCriteria = $this->searchCriteriaBuilder
+                    ->addFilter("row_id", $productId)
+                    ->create();
+                $products = $this->productRepository->getList($searchCriteria)->getItems();
+                $product = reset($products);
+            }
+
             if (!$product) {
                 $result->setData($this->makeData(-1, __("Product not found")));
                 return $result;

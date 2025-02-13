@@ -74,7 +74,7 @@ class Brother extends DataObject
      */
     public function getBrotherProducts(ProductInterface $currentProduct)
     {
-        $productId = $currentProduct->getId();
+        $productId = $currentProduct->getRowId() ?? $currentProduct->getId();
         if (!$this->hasBrotherProducts($productId)) {
             $products = [];
             $collection = $this->getGeneralBrotherProductCollection($currentProduct);
@@ -94,11 +94,11 @@ class Brother extends DataObject
      */
     public function getBrotherProductIds(ProductInterface $currentProduct)
     {
-        $productId = $currentProduct->getId();
+        $productId = $currentProduct->getRowId() ?? $currentProduct->getId();
         if (!$this->hasBrotherProductIds($productId)) {
             $ids = [];
             foreach ($this->getBrotherProducts($currentProduct) as $product) {
-                $ids[] = $product->getId();
+                $ids[] = $product->getRowId() ?? $product->getId();
             }
             $this->botherProductIds[$productId] = $ids;
         }

@@ -56,9 +56,9 @@ class BrotherManagement implements BrotherManagementInterface
      */
     protected function getBrother(ProductInterface $product)
     {
-        if (!isset($this->brothers[$product->getId()])) {
-            $this->brothers[$product->getId()] = $this->brotherFactory->create();
+        if (!isset($this->brothers[$product->getRowId() ?? $product->getId()])) {
+            $this->brothers[$product->getRowId() ?? $product->getId()] = $this->brotherFactory->create();
         }
-        return $this->brothers[$product->getId()];
+        return $this->brothers[$product->getRowId() ?? $product->getId()];
     }
 }

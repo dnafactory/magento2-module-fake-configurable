@@ -75,7 +75,8 @@ class Brother extends \Magento\Framework\View\Element\Template
         foreach ($this->layoutProcessors as $processor) {
             $this->jsLayout = $processor->process($this->jsLayout);
         }
-        $this->jsLayout['components']['fakeConfigurable']['productId'] = $this->getProduct()->getId();
+        $product = $this->getProduct();
+        $this->jsLayout['components']['fakeConfigurable']['productId'] = $product->getRowId() ?? $product->getId();
         $this->jsLayout['components']['fakeConfigurable']['brotherLabel'] = $this->fakeConfigurableConfiguration->getBrotherLabel();
         return $this->jsonSerializer->serialize($this->jsLayout);
     }
