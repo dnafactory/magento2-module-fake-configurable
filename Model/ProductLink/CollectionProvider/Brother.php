@@ -25,6 +25,6 @@ class Brother implements CollectionProviderInterface
      */
     public function getLinkedProducts(Product $product)
     {
-        return (array) $this->model->getBrotherProducts($product);
+        return (array) $this->model->getBrotherProducts($product, true);
     }
 }

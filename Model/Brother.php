@@ -72,12 +72,15 @@ class Brother extends DataObject
      * @param ProductInterface $currentProduct
      * @return array
      */
-    public function getBrotherProducts(ProductInterface $currentProduct)
+    public function getBrotherProducts(ProductInterface $currentProduct, $includeDisabled = false)
     {
         $productId = $currentProduct->getRowId() ?? $currentProduct->getId();
         if (!$this->hasBrotherProducts($productId)) {
             $products = [];
             $collection = $this->getGeneralBrotherProductCollection($currentProduct);
+            if (!$includeDisabled) {
+                $collection->setVisibility($this->catalogProductVisibility->getVisibleInCatalogIds());
+            }
             foreach ($collection as $product) {
                 $products[] = $product;
             }
