@@ -19,6 +19,9 @@
             <argument name="providers" xsi:type="array">
                 <item name="brother" xsi:type="object">DNAFactory\FakeConfigurable\Model\ProductLink\CollectionProvider\Brother</item>
             </argument>
+            <argument name="mapProviders" xsi:type="array">
+                <item name="linked_brother" xsi:type="object">DNAFactory\FakeConfigurable\Model\ProductLink\CollectionProvider\LinkedMapProvider</item>
+            </argument>
         </arguments>
     </type>
     <type name="\Magento\CatalogImportExport\Model\Import\Product">
